@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Responsive Navbar{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .navbar {
+        background-color: #212529;
+        /* Dark background */
+    }
+
+    .navbar-nav .nav-link {
+        color: #ffffff;
+        transition: color 0.3s;
+    }
+
+    .navbar-nav .nav-link:hover {
+        color: #0d6efd;
+        /* Highlight color on hover */
+    }
+
+    .user-image {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #ffffff;
+    }
+
+    .card img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+    }
+
+    @keyframes slideInFromRight {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    .card {
+        opacity: 0;
+        animation: slideInFromRight 1s ease-out forwards;
+    }
+
+    .card:nth-child(1) {
+        animation-delay: 0.2s;
+    }
+
+    .card:nth-child(2) {
+        animation-delay: 0.4s;
+    }
+
+    .card:nth-child(3) {
+        animation-delay: 0.6s;
+    }
+
+    #target-card {
+        transform: translateX(-100%);
+        opacity: 0;
+        transition: transform 1.5s ease-out, opacity 1.5s ease-out;
+    }
+
+    #target-card.visible {
+        transform: translateX(0);
+        opacity: 1;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="row g-3">
+        <!-- Primera tarjeta -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{% static 'img/inicio/Folium.jpg' %}" class="img-fluid rounded-start" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Folium</h5>
+                            <p class="card-text">Librería de Python para visualización geoespacial de datos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Segunda tarjeta -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{% static 'img/inicio/local1.jpg' %}" class="img-fluid rounded-start" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Localización</h5>
+                            <p class="card-text">Ubicación geográfica en tiempo real.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tercera tarjeta -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{% static 'img/inicio/comu.jpg' %}" class="img-fluid rounded-start" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Comunitario</h5>
+                            <p class="card-text">Potenciando el bienestar comunitario.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mapa -->
+    <div class="card-body" id="target-card">
+        <div class="chart-pie pt-4 pb-2">
+            <div class="container">
+                {{ map|safe }} <!-- Mapa de Folium con los marcadores -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    window.onload = function() {
+        setTimeout(function() {
+            document.querySelector('.container').style.opacity = 1;
+        }, 3000);
+
+        document.getElementById("target-card").classList.add("visible");
+    }
+</script>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

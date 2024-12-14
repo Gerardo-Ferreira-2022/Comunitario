@@ -1,0 +1,38 @@
+# Archivos de entorno virtual
+env/
+venv/
+ENV/
+.venv/
+
+# Archivos de configuración de Django
+*.log
+*.pot
+*.pyc
+*.pyo
+*.db
+*.sqlite3
+
+# Directorios de archivos estáticos y coleccionados por Django
+
+# Archivos de configuración de sistemas operativos
+.DS_Store         # MacOS
+Thumbs.db         # Windows
+
+# Archivos de configuración de IDEs y editores de código
+.vscode/
+.idea/
+*.swp
+
+# Archivos de migraciones
+migrations/
+
+# Archivos de configuración de Python
+*.pyc
+*.pyo
+__pycache__/
+
+# Archivos de configuración de Docker
+.docker/
+
+# Archivos de test de cobertura
+coverage/

@@ -1,0 +1,144 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+
+{% load static %}
+
+<style>
+    .user-image {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #ffffff;
+    }
+
+    .custom-rounded {
+        border-radius: 15px;
+        /* Ajusta el valor según el redondeo que desees */
+    }
+</style>
+
+
+<div class="container mt-4">
+    <h1>Lista de Usuarios</h1>
+    
+    <!-- Mostrar mensajes de éxito o error -->
+    {% if messages %}
+        <div class="alert alert-success" role="alert">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Tabla de usuarios -->
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Fecha de Registro</th>
+            <th>Superusuario</th>
+            <th>Activo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for usuario in usuarios %}
+            <tr>
+                <td>{{ usuario.username }}</td>
+                <td>{{ usuario.email }}</td>
+                <td>{{ usuario.date_joined }}</td>
+                <td>
+                    {% if usuario.is_superuser %}
+                        Sí
+                    {% else %}
+                        No
+                    {% endif %}
+                </td>
+                <td>
+                    {% if usuario.is_active %}
+                        Sí
+                    {% else %}
+                        No
+                    {% endif %}
+                </td>
+                <td>
+                    <!-- Botón para abrir el modal de actualización -->
+                    <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#actualizarModal{{ usuario.id }}">
+                        Actualizar
+                    </button>
+
+                    <!-- Modal de actualización -->
+                    <div class="modal fade" id="actualizarModal{{ usuario.id }}" tabindex="-1" aria-labelledby="actualizarModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="actualizarModalLabel">Actualizar Usuario: {{ usuario.username }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <form action="{% url 'actualizar_usuario' usuario.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label for="email{{ usuario.id }}" class="form-label">Email</label>
+                                            <input type="email" name="email" id="email{{ usuario.id }}" class="form-control" value="{{ usuario.email }}" required>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" name="is_superuser" class="form-check-input" id="superuser{{ usuario.id }}" {% if usuario.is_superuser %}checked{% endif %}>
+                                            <label class="form-check-label" for="superuser{{ usuario.id }}">Superusuario</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" name="is_active" class="form-check-input" id="active{{ usuario.id }}" {% if usuario.is_active %}checked{% endif %}>
+                                            <label class="form-check-label" for="active{{ usuario.id }}">Activo</label>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botón de eliminar con modal -->
+                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#eliminarModal{{ usuario.id }}">
+                        Eliminar
+                    </button>
+
+                    <!-- Modal de confirmación de eliminación -->
+                    <div class="modal fade" id="eliminarModal{{ usuario.id }}" tabindex="-1" aria-labelledby="eliminarModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="eliminarModalLabel">Confirmar Eliminación</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    ¿Estás seguro de que deseas eliminar a {{ usuario.username }}?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <a href="{% url 'eliminar_usuario' usuario.id %}" class="btn btn-danger">Eliminar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+    
+</table>
+
+</div>
+</div>
+{% endblock %}
