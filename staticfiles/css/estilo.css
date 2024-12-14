@@ -1,0 +1,109 @@
+/* Estilos para el menú lateral */
+body {
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #333;
+    color: white;
+    height: 60px;
+    justify-content: space-between;
+    padding: 0 20px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.menu-lateral {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background-color: #222;
+    padding-top: 20px;
+    display: none;
+}
+
+.menu-lateral ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.menu-lateral .menu-item {
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+}
+
+.menu-lateral .menu-item:hover {
+    background-color: #444;
+}
+
+.hamburguer {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.hamburguer .line {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 5px 0;
+}
+
+/* Estilos para el menú móvil */
+.menu-mobile {
+    display: none;
+    background-color: #222;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    z-index: 1000;
+}
+
+.menu-mobile .menu-item {
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+}
+
+.menu-mobile .menu-item:hover {
+    background-color: #444;
+}
+
+.container {
+    margin-left: 250px;
+    margin-top: 100px;
+    padding: 20px;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .menu-lateral {
+        display: none;
+    }
+
+    .hamburguer {
+        display: flex;
+    }
+
+    .menu-mobile {
+        display: block;
+    }
+
+    .container {
+        margin-left: 0;
+    }
+}
